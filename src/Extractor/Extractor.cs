@@ -60,7 +60,7 @@ namespace Extractor
 
         private static IEnumerable<Extract> GetMeasures(Table table, string outputDir)
         {
-            return table.Measures.Select(m =>
+            return table.Measures.Where(m => m.Expression != null && !m.Expression.StartsWith("EXTERNALMEASURE")).Select(m =>
             {
                 var tableName = m.DisplayFolder != null ? table.Name : $"{table.Name}/{m.DisplayFolder}";
                 
