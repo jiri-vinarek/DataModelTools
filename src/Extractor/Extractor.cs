@@ -5,7 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
-using PowerBiTools.Dto;
+using Extractor.Dto;
 
 namespace Extractor
 {
@@ -15,8 +15,7 @@ namespace Extractor
         {
             if (args.Length != 2)
             {
-                Console.WriteLine(
-                    "Provide *.pbit or *.pbix file name as the first argument and output directory as the second argument.");
+                Console.WriteLine("Provide *.pbit or *.pbix file name as the first argument and output directory as the second argument.");
                 return;
             }
 

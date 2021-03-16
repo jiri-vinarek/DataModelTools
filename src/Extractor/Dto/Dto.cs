@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PowerBiTools.Dto
+namespace Extractor.Dto
 {
     public class DataAccessOptions
     {
