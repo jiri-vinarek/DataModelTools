@@ -1,0 +1,116 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Text;
+using Newtonsoft.Json;
+using PowerBiTools.Dto;
+
+namespace Extractor
+{
+    internal sealed class Extractor
+    {
+        public static void Main(string[] args)
+        {
+            if (args.Length != 2)
+            {
+                Console.WriteLine(
+                    "Provide *.pbit or *.pbix file name as the first argument and output directory as the second argument.");
+                return;
+            }
+
+            var inputFile = args[0];
+            var outputDir = args[1];
+
+            var schema = Read(inputFile);
+            Write(schema, outputDir);
+        }
+
+        private static DataModelSchema Read(string path)
+        {
+            using (var archive = ZipFile.OpenRead(path))
+            using (var stream = archive.GetEntry("DataModelSchema").Open())
+            using (var file = new StreamReader(stream, Encoding.Unicode))
+            {
+                var serializer = new JsonSerializer();
+                return (DataModelSchema) serializer.Deserialize(file, typeof(DataModelSchema));
+            }
+        }
+
+        private static void Write(DataModelSchema schema, string outputDir)
+        {
+            var measures = schema.Model.Tables.Where(t => t.Measures != null).SelectMany(t => GetMeasures(t, outputDir));
+            var columns = schema.Model.Tables.Where(t => t.Columns != null && !t.Name.StartsWith("DateTableTemplate") && !t.Name.StartsWith("LocalDateTable")).SelectMany(t => GetColumns(t, outputDir));
+
+            foreach (var extract in measures.Concat(columns))
+            {
+                var path = SanitizePath(extract.Path);
+                Directory.CreateDirectory(path);
+                File.WriteAllText($"{path}/{SanitizeFileName(extract.FileName)}", extract.Content);
+            }
+        }
+
+        private static IEnumerable<Extract> GetMeasures(Table table, string outputDir)
+        {
+            return table.Measures.Select(m =>
+            {
+                var tableName = m.DisplayFolder != null ? table.Name : $"{table.Name}/{m.DisplayFolder}";
+                
+                return new Extract(
+                    path: $"{outputDir}/tables/{tableName}/measures",
+                    fileName: m.Name,
+                    content: m.Expression
+                );
+            });
+        }
+        
+        private static IEnumerable<Extract> GetColumns(Table table, string outputDir)
+        {
+            return table.Columns.Where(c => c.Type == "calculated").Select(c =>
+            {
+                var tableName = c.DisplayFolder != null ? table.Name : $"{table.Name}/{c.DisplayFolder}";
+                
+                return new Extract(
+                    path: $"{outputDir}/tables/{tableName}/columns",
+                    fileName: c.Name,
+                    content: c.Expression
+                );
+            });
+        }
+        
+        private static string SanitizeFileName(string fileName, string replacement = "_")
+        {
+            foreach (var badChar in Path.GetInvalidFileNameChars())
+            {
+                fileName = fileName.Replace(badChar.ToString(), replacement);
+            }
+
+            return fileName;
+        }
+        
+        private static string SanitizePath(string path, string replacement = "_")
+        {
+            foreach (var badChar in Path.GetInvalidPathChars())
+            {
+                path = path.Replace(badChar.ToString(), replacement);
+            }
+
+            return path;
+        }
+    }
+
+    internal sealed class Extract
+    {
+        public Extract(string path, string fileName, string content)
+        {
+            Path = path;
+            FileName = fileName;
+            Content = content;
+        }
+
+        public string Path { get; }
+        public  string FileName { get; }
+        public  string Content { get; }
+    }
+}
