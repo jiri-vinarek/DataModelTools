@@ -147,9 +147,11 @@ namespace PowerBiTools.Dto
 
     public class LinguisticMetadata
     {
-        public Content Content { get; set; }
-        public string ContentType { get; set; }
-        public DateTime ModifiedTime { get; set; }
+        // In some reports Content contains XML and sometimes JSON.
+        // Disabled to skip parsing.
+        // public Content Content { get; set; }
+        // public string ContentType { get; set; }
+        // public DateTime ModifiedTime { get; set; }
     }
 
     public class Culture

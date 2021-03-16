@@ -24,18 +24,25 @@ namespace Extractor
             var outputDir = args[1];
 
             var schema = Read(inputFile);
-            Write(schema, outputDir);
+            if (schema != null)
+            {
+                Write(schema, outputDir);
+            }
         }
 
         private static DataModelSchema Read(string path)
         {
-            using (var archive = ZipFile.OpenRead(path))
-            using (var stream = archive.GetEntry("DataModelSchema").Open())
-            using (var file = new StreamReader(stream, Encoding.Unicode))
+            using var archive = ZipFile.OpenRead(path);
+            var schema = archive.GetEntry("DataModelSchema");
+            if (schema == null)
             {
-                var serializer = new JsonSerializer();
-                return (DataModelSchema) serializer.Deserialize(file, typeof(DataModelSchema));
+                return null;
             }
+
+            using var stream = schema.Open();
+            using var file = new StreamReader(stream, Encoding.Unicode);
+            var serializer = new JsonSerializer();
+            return (DataModelSchema) serializer.Deserialize(file, typeof(DataModelSchema));
         }
 
         private static void Write(DataModelSchema schema, string outputDir)
