@@ -47,10 +47,13 @@ namespace Extractor
 
         private static void Write(DataModelSchema schema, string outputDir)
         {
-            var measures = schema.Model.Tables.Where(t => t.Measures != null).SelectMany(t => GetMeasures(t, outputDir));
-            var columns = schema.Model.Tables.Where(t => t.Columns != null && !t.Name.StartsWith("DateTableTemplate") && !t.Name.StartsWith("LocalDateTable")).SelectMany(t => GetColumns(t, outputDir));
+            var tables = schema.Model.Tables.Where(t => !t.Name.StartsWith("DateTableTemplate") && !t.Name.StartsWith("LocalDateTable"));
+            
+            var measures = tables.Where(t => t.Measures != null).SelectMany(t => GetMeasures(t, outputDir));
+            var columns = tables.Where(t => t.Columns != null).SelectMany(t => GetColumns(t, outputDir));
+            var partitions = tables.Where(t => t.Partitions != null).SelectMany(t => GetPartitions(t, outputDir));
 
-            foreach (var extract in measures.Concat(columns))
+            foreach (var extract in measures.Concat(columns).Concat(partitions))
             {
                 var path = SanitizePath(extract.Path);
                 Directory.CreateDirectory(path);
@@ -71,7 +74,7 @@ namespace Extractor
                 );
             });
         }
-        
+
         private static IEnumerable<Extract> GetColumns(Table table, string outputDir)
         {
             return table.Columns.Where(c => c.Type == "calculated").Select(c =>
@@ -85,7 +88,19 @@ namespace Extractor
                 );
             });
         }
-        
+
+        private static IEnumerable<Extract> GetPartitions(Table table, string outputDir)
+        {
+            return table.Partitions.Where(p => p.Source.Expression != null).Select(p =>
+            {
+                return new Extract(
+                    path: $"{outputDir}/tables/{table.Name}/partitions",
+                    fileName: $"{p.Name}.{p.Source.Type}",
+                    content: ExpandEscaped(p.Source.Expression)
+                );
+            });
+        }
+
         private static string SanitizeFileName(string fileName, string replacement = "_")
         {
             foreach (var badChar in Path.GetInvalidFileNameChars())
@@ -95,7 +110,7 @@ namespace Extractor
 
             return fileName;
         }
-        
+
         private static string SanitizePath(string path, string replacement = "_")
         {
             foreach (var badChar in Path.GetInvalidPathChars())
@@ -104,6 +119,14 @@ namespace Extractor
             }
 
             return path;
+        }
+
+        private static string ExpandEscaped(string sourceExpression)
+        {
+            return sourceExpression.Replace("\n", Environment.NewLine)
+                .Replace("#(lf)", Environment.NewLine)
+                .Replace("#(tab)", "\t")
+                .Replace("\\\"", "\"");
         }
     }
 
