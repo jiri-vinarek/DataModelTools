@@ -68,7 +68,7 @@ namespace Extractor
                 
                 return new Extract(
                     path: $"{outputDir}/tables/{tableName}/measures",
-                    fileName: m.Name,
+                    fileName: $"{m.Name}.dax",
                     content: m.Expression
                 );
             });
@@ -82,7 +82,7 @@ namespace Extractor
                 
                 return new Extract(
                     path: $"{outputDir}/tables/{tableName}/columns",
-                    fileName: c.Name,
+                    fileName: $"{c.Name}.dax",
                     content: c.Expression
                 );
             });
@@ -139,7 +139,7 @@ namespace Extractor
         }
 
         public string Path { get; }
-        public  string FileName { get; }
-        public  string Content { get; }
+        public string FileName { get; }
+        public string Content { get; }
     }
 }
