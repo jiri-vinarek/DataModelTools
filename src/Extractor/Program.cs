@@ -5,7 +5,6 @@ using System.IO.Compression;
 using System.Text;
 using Newtonsoft.Json;
 using Extractor.Dto;
-using Extractor.Linter;
 
 namespace Extractor
 {
@@ -13,30 +12,21 @@ namespace Extractor
     {
         public static void Main(string[] args)
         {
-            if (args.Length != 3 || args[0] != "extract" && args[0] != "lint")
+            if (args.Length != 2)
             {
-                Console.WriteLine("Usage: dotnet Extractor.dll (extract|lint) report_file.pbi[xt] output_dir");
+                Console.WriteLine("Usage: dotnet Extractor.dll report_file.pbi[xt] output_dir");
                 return;
             }
 
-            var inputFile = args[1];
-            var outputDir = args[2];
+            var inputFile = args[0];
+            var outputDir = args[1];
 
             var schema = Read(inputFile);
             
             if (schema != null)
             {
-                if (args[0] == "extract")
-                {
-                    var extracts = Extractor.GetExtracts(schema);
-                    Write(extracts, outputDir);
-                }
-
-                if (args[0] == "lint")
-                {
-                    var messages = Linter.Linter.Check(schema);
-                    Output(messages, outputDir);
-                }
+                var extracts = Extractor.GetExtracts(schema);
+                Write(extracts, outputDir);
             }
         }
 
@@ -62,14 +52,6 @@ namespace Extractor
                 var directory = $"{outputDir}/{extract.File.RelativePath}";
                 Directory.CreateDirectory(directory);
                 System.IO.File.WriteAllText($"{directory}/{extract.File.FileName}", extract.Content);
-            }
-        }
-
-        private static void Output(IEnumerable<Message> messages, string outputDir)
-        {
-            foreach (var message in messages)
-            {
-                Console.Out.WriteLine($"::{message.MessageSeverity} file={outputDir}/{message.File.RelativePath}/{message.File.FileName},line={message.Line},col={message.Column}::{message.Text}");
             }
         }
     }

@@ -3,7 +3,7 @@ using Extractor.Dto;
 
 namespace Extractor
 {
-    public sealed class File
+    internal sealed class File
     {
         public string RelativePath { get; }
         public string FileName { get; }

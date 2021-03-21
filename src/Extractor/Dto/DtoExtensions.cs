@@ -4,7 +4,7 @@ using Extractor.Dto;
 
 namespace Extractor
 {
-    public static class DtoExtensions
+    internal static class DtoExtensions
     {
         public static IEnumerable<Table> FilterTables(this DataModelSchema schema)
         {
