@@ -34,10 +34,17 @@ namespace Extractor
 
         public static File FromPartition(Table table, Partition partition)
         {
-            var path = $"tables/{table.Name}/partitions";
-            var fileName = $"{partition.Name}.{partition.Source.Type}";
+            var path = SanitizePath($"tables/{table.Name}/partitions");
+            var fileName = SanitizeFileName($"{partition.Name}.{partition.Source.Type}");
 
             return new File(path, fileName);
+        }
+
+        public static File FromExpression(Expression expression)
+        {
+            var fileName = SanitizeFileName($"{expression.Name}.{expression.Kind}");
+
+            return new File("expressions", fileName);
         }
         
         private static string SanitizeFileName(string fileName, string replacement = "_")

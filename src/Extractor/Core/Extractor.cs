@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Extractor.Dto;
@@ -14,8 +15,9 @@ namespace Extractor
             var measures = tables.Where(t => t.Measures != null).SelectMany(t => GetMeasures(t));
             var columns = tables.Where(t => t.Columns != null).SelectMany(t => GetColumns(t));
             var partitions = tables.Where(t => t.Partitions != null).SelectMany(t => GetPartitions(t));
+            var expressions = schema.Model.Expressions != null ? schema.Model.Expressions.Select(e => GetExtractFromExpression(e)) : Enumerable.Empty<Extract>();
 
-            return measures.Concat(columns).Concat(partitions);
+            return measures.Concat(columns).Concat(partitions).Concat(expressions);
         }
         
         private static IEnumerable<Extract> GetMeasures(Table table)
@@ -40,6 +42,14 @@ namespace Extractor
                 File.FromPartition(table, p),
                 ExpandEscaped(p.Source.Expression)
             ));
+        }
+
+        private static Extract GetExtractFromExpression(Expression expression)
+        {
+            return new Extract(
+                File.FromExpression(expression),
+                ExpandEscaped(expression.ExpressionContent)
+            );
         }
         
         private static string ExpandEscaped(string sourceExpression)

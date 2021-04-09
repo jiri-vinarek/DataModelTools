@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Extractor.Dto
 {
@@ -170,12 +171,32 @@ namespace Extractor.Dto
         public string SourceQueryCulture { get; set; }
         public DateTime ModifiedTime { get; set; }
         public DateTime StructureModifiedTime { get; set; }
+        public IList<Expression> Expressions { get; set; }
+        public IList<QueryGroup> QueryGroups { get; set; }
         public IList<Table> Tables { get; set; }
         public IList<Relationship> Relationships { get; set; }
         public IList<Culture> Cultures { get; set; }
         public IList<Annotation> Annotations { get; set; }
     }
 
+    public class QueryGroup
+    {
+        public string Folder { get; set; }
+        public IList<Annotation> Annotations { get; set; }
+    }
+    
+    public class Expression
+    {
+        public string Name { get; set; }
+        public string Kind { get; set; }
+        [JsonProperty("Expression")]
+        public string ExpressionContent { get; set; }
+        public string LineageTag { get; set; }
+        public DateTime ModifiedTime { get; set; }
+        public IList<Annotation> Annotations { get; set; }
+        public string QueryGroup { get; set; }
+    }
+    
     public class DataModelSchema
     {
         public string Name { get; set; }
