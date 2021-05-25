@@ -16,55 +16,52 @@ namespace Extractor
 
         public static File FromMeasure(Table table, Measure measure)
         {
-            var tableName = measure.DisplayFolder == null ? table.Name : $"{table.Name}/{measure.DisplayFolder}";
-            var path = SanitizePath($"tables/{tableName}/measures");
-            var fileName = SanitizeFileName($"{measure.Name}.dax");
+            var tableName = GetSanitizedTableName(measure.DisplayFolder, table.Name);
+            var path = $"tables/{tableName}/measures";
+            var fileName = Sanitize($"{measure.Name}.dax");
 
             return new File(path, fileName);
         }
 
         public static File FromColumn(Table table, Column column)
         {
-            var tableName = column.DisplayFolder == null ? table.Name : $"{table.Name}/{column.DisplayFolder}";
-            var path = SanitizePath($"tables/{tableName}/columns");
-            var fileName = SanitizeFileName($"{column.Name}.dax");
+            var tableName = GetSanitizedTableName(column.DisplayFolder, table.Name);
+            var path = $"tables/{tableName}/columns";
+            var fileName = Sanitize($"{column.Name}.dax");
 
             return new File(path, fileName);
         }
 
+        private static string GetSanitizedTableName(string displayFolder, string tableName)
+        {
+            var sanitizedTableName = Sanitize(tableName);
+
+            return displayFolder == null ? sanitizedTableName : $"{sanitizedTableName}/{Sanitize(displayFolder)}";
+        }
+
         public static File FromPartition(Table table, Partition partition)
         {
-            var path = SanitizePath($"tables/{table.Name}/partitions");
-            var fileName = SanitizeFileName($"{partition.Name}.{partition.Source.Type}");
+            var path = $"tables/{Sanitize(table.Name)}/partitions";
+            var fileName = Sanitize($"{partition.Name}.{partition.Source.Type}");
 
             return new File(path, fileName);
         }
 
         public static File FromExpression(Expression expression)
         {
-            var fileName = SanitizeFileName($"{expression.Name}.{expression.Kind}");
+            var fileName = Sanitize($"{expression.Name}.{expression.Kind}");
 
             return new File("expressions", fileName);
         }
         
-        private static string SanitizeFileName(string fileName, string replacement = "_")
+        private static string Sanitize(string fileName, string replacement = "_")
         {
             foreach (var badChar in Path.GetInvalidFileNameChars())
             {
                 fileName = fileName.Replace(badChar.ToString(), replacement);
             }
 
-            return fileName.Replace("\\", replacement);
-        }
-
-        private static string SanitizePath(string path, string replacement = "_")
-        {
-            foreach (var badChar in Path.GetInvalidPathChars())
-            {
-                path = path.Replace(badChar.ToString(), replacement);
-            }
-
-            return path.Replace("\\", "/");
+            return fileName;
         }
     }
 }
