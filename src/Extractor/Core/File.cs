@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Extractor.Dto;
+﻿using Extractor.Dto;
 
 namespace Extractor
 {
