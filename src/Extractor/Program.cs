@@ -50,8 +50,9 @@ namespace Extractor
             foreach (var extract in extracts)
             {
                 var directory = $"{outputDir}/{extract.File.RelativePath}";
+                var contents = extract.Content + Environment.NewLine;
                 Directory.CreateDirectory(directory);
-                System.IO.File.WriteAllText($"{directory}/{extract.File.FileName}", extract.Content);
+                System.IO.File.WriteAllText($"{directory}/{extract.File.FileName}", contents);
             }
         }
     }
