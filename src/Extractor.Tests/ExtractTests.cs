@@ -107,6 +107,6 @@ public class Tests
 
     private string GetDataPath(string fileName)
     {
-        return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"Data\\{fileName}");
+        return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Data", fileName);
     }
 }
