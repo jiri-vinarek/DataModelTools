@@ -1,0 +1,16 @@
+{
+  "model": {
+    "tables": [
+      {
+        "name": "table1",
+        "columns": [
+          {
+            "type": "calculated",
+            "name": "HelloColumn",
+            "expression": "hello"
+          }
+        ]
+      }
+    ]
+  }
+}
