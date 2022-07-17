@@ -2,12 +2,12 @@
 
 namespace Extractor
 {
-    internal sealed class File
+    public sealed class File
     {
         public string RelativePath { get; }
         public string FileName { get; }
 
-        private File(string relativePath, string fileName)
+        public File(string relativePath, string fileName)
         {
             RelativePath = relativePath;
             FileName = fileName;

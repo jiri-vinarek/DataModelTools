@@ -1,0 +1,15 @@
+{
+  "model": {
+    "tables": [
+      {
+        "name": "table1",
+        "measures": [
+          {
+            "name": "Measure1",
+            "expression": "1 + 2"
+          }
+        ]
+      }
+    ]
+  }
+}

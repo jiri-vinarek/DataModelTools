@@ -1,0 +1,13 @@
+{
+  "model": {
+    "tables": [
+    ],
+    "expressions": [
+      {
+        "name": "Db-hostname",
+        "kind": "m",
+        "expression": "null meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]"
+      }
+    ]
+  }
+}

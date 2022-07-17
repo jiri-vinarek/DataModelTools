@@ -8,7 +8,7 @@ using Extractor.Dto;
 
 namespace Extractor
 {
-    internal sealed class Program
+    public sealed class Program
     {
         public static void Main(string[] args)
         {
@@ -30,7 +30,7 @@ namespace Extractor
             }
         }
 
-        private static DataModelSchema Read(string path)
+        public static DataModelSchema Read(string path)
         {
             using var archive = ZipFile.OpenRead(path);
             var schema = archive.GetEntry("DataModelSchema");
@@ -40,12 +40,17 @@ namespace Extractor
             }
 
             using var stream = schema.Open();
-            using var file = new StreamReader(stream, Encoding.Unicode);
-            var serializer = new JsonSerializer();
-            return (DataModelSchema) serializer.Deserialize(file, typeof(DataModelSchema));
+            using var reader = new StreamReader(stream, Encoding.Unicode);
+            return GetSchema(reader);
         }
 
-        private static void Write(IEnumerable<Extract> extracts, string outputDir)
+        public static DataModelSchema GetSchema(StreamReader reader)
+        {
+            var serializer = new JsonSerializer();
+            return (DataModelSchema) serializer.Deserialize(reader, typeof(DataModelSchema));
+        }
+
+        public static void Write(IEnumerable<Extract> extracts, string outputDir)
         {
             foreach (var extract in extracts)
             {

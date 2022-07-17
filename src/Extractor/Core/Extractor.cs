@@ -5,7 +5,7 @@ using Extractor.Dto;
 
 namespace Extractor
 {
-    internal static class Extractor
+    public static class Extractor
     {
         public static IEnumerable<Extract> GetExtracts(DataModelSchema schema)
         {

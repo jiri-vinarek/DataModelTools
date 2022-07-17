@@ -1,0 +1,17 @@
+{
+  "model": {
+    "tables": [
+      {
+        "name": "table1",
+        "columns": [
+          {
+            "type": "calculated",
+            "name": "Column 2 / 3 \\ 4",
+            "expression": "\"Custom column\"",
+            "displayFolder": "f1/f2\\f3"
+          }
+        ]
+      }
+    ]
+  }
+}

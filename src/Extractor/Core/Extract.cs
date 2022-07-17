@@ -1,6 +1,6 @@
 ﻿namespace Extractor
 {
-    internal sealed class Extract
+    public sealed class Extract
     {
         public Extract(File file, string content)
         {
