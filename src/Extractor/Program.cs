@@ -59,7 +59,7 @@ namespace Extractor
                 layout = GetLayout(reader);
             }
 
-            return (dataModelSchema: dataModelSchema, layout: layout);
+            return (dataModelSchema, layout);
         }
 
         public static DataModelSchema GetSchema(StreamReader reader)
@@ -68,7 +68,7 @@ namespace Extractor
             return (DataModelSchema)serializer.Deserialize(reader, typeof(DataModelSchema));
         }
 
-        private static object GetLayout(StreamReader reader)
+        public static object GetLayout(StreamReader reader)
         {
             return JsonConvert.DeserializeObject(reader.ReadToEnd());
         }
