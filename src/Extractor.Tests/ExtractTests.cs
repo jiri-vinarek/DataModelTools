@@ -102,7 +102,7 @@ public class Tests
     {
         using var reader = new StreamReader(GetDataPath(fileName));
         var schema = Program.GetSchema(reader);
-        return Extractor.GetExtracts(schema);
+        return Extractor.GetSchemaExtracts(schema);
     }
 
     private string GetDataPath(string fileName)

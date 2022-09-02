@@ -21,41 +21,56 @@ namespace Extractor
             var inputFile = args[0];
             var outputDir = args[1];
 
-            var schema = Read(inputFile);
-            
+            var (schema, layout) = Read(inputFile);
+
             if (schema != null)
             {
-                var extracts = Extractor.GetExtracts(schema);
+                var extracts = Extractor.GetSchemaExtracts(schema);
                 Write(extracts, outputDir);
-                ExtractLayout(inputFile, outputDir);
             }
-        }
 
-        public static void ExtractLayout(string inputFile, string outputDir)
-        {
-            using var archive = ZipFile.OpenRead(inputFile);
-            var layout = archive.GetEntry("Report/Layout");
-            layout?.ExtractToFile(outputDir + "/Layout", true);
-        }
-
-        public static DataModelSchema Read(string path)
-        {
-            using var archive = ZipFile.OpenRead(path);
-            var schema = archive.GetEntry("DataModelSchema");
-            if (schema == null)
+            if (layout != null)
             {
-                return null;
+                var extract = Extractor.GetLayoutExtract(layout);
+                Write(new[] { extract }, outputDir);
+            }
+        }
+
+        public static (DataModelSchema dataModelSchema, object layout) Read(string path)
+        {
+            DataModelSchema dataModelSchema = null;
+            object layout = null;
+
+            using var archive = ZipFile.OpenRead(path);
+
+            var schemaEntry = archive.GetEntry("DataModelSchema");
+            if (schemaEntry != null)
+            {
+                using var stream = schemaEntry.Open();
+                using var reader = new StreamReader(stream, Encoding.Unicode);
+                dataModelSchema = GetSchema(reader);
             }
 
-            using var stream = schema.Open();
-            using var reader = new StreamReader(stream, Encoding.Unicode);
-            return GetSchema(reader);
+            var layoutEntry = archive.GetEntry("Report/Layout");
+            if (layoutEntry != null)
+            {
+                using var stream = layoutEntry.Open();
+                using var reader = new StreamReader(stream, Encoding.Unicode);
+                layout = GetLayout(reader);
+            }
+
+            return (dataModelSchema: dataModelSchema, layout: layout);
         }
 
         public static DataModelSchema GetSchema(StreamReader reader)
         {
             var serializer = new JsonSerializer();
-            return (DataModelSchema) serializer.Deserialize(reader, typeof(DataModelSchema));
+            return (DataModelSchema)serializer.Deserialize(reader, typeof(DataModelSchema));
+        }
+
+        private static object GetLayout(StreamReader reader)
+        {
+            return JsonConvert.DeserializeObject(reader.ReadToEnd());
         }
 
         public static void Write(IEnumerable<Extract> extracts, string outputDir)
