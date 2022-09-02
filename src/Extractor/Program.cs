@@ -35,7 +35,7 @@ namespace Extractor
         {
             using var archive = ZipFile.OpenRead(inputFile);
             var layout = archive.GetEntry("Report/Layout");
-            layout.ExtractToFile(outputDir + "/Layout", true);             
+            layout?.ExtractToFile(outputDir + "/Layout", true);
         }
 
         public static DataModelSchema Read(string path)
