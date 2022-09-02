@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Extractor.Dto;
+using Newtonsoft.Json;
 
 namespace Extractor
 {
     public static class Extractor
     {
-        public static IEnumerable<Extract> GetExtracts(DataModelSchema schema)
+        public static IEnumerable<Extract> GetSchemaExtracts(DataModelSchema schema)
         {
             var tables = schema.FilterTables();
             
@@ -17,6 +18,14 @@ namespace Extractor
             var expressions = schema.Model.Expressions != null ? schema.Model.Expressions.Select(e => GetExtractFromExpression(e)) : Enumerable.Empty<Extract>();
 
             return measures.Concat(columns).Concat(partitions).Concat(expressions);
+        }
+
+        public static Extract GetLayoutExtract(object layout)
+        {
+            return new Extract(
+                new File("report", "layout.json"),
+                JsonConvert.SerializeObject(layout, Formatting.Indented)
+            );
         }
         
         private static IEnumerable<Extract> GetMeasures(Table table)
@@ -50,7 +59,7 @@ namespace Extractor
                 ExpandEscaped(expression.ExpressionContent)
             );
         }
-        
+
         private static string ExpandEscaped(string sourceExpression)
         {
             return sourceExpression.Replace("\n", Environment.NewLine)
