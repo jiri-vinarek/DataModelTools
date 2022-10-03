@@ -10,7 +10,7 @@ namespace Extractor
     {
         public static IEnumerable<Extract> GetSchemaExtracts(DataModelSchema schema)
         {
-            var tables = schema.FilterTables();
+            var tables = schema.FilterTables().ToList();
             
             var measures = tables.Where(t => t.Measures != null).SelectMany(t => GetMeasures(t));
             var columns = tables.Where(t => t.Columns != null).SelectMany(t => GetColumns(t));

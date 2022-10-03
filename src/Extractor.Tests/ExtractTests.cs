@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Extractor.Tests;
 
-public class Tests
+public sealed class Tests
 {
     [Test]
     public void TestMeasure()
@@ -81,7 +81,7 @@ public class Tests
     }
     
     [Test]
-    public void TestExpresssion()
+    public void TestExpression()
     {
         var extracts = GetExtracts("Expression.json");
         var expectedExtracts = new List<Extract>
