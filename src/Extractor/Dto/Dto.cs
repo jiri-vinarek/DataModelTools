@@ -1,36 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable CollectionNeverUpdated.Global
+// ReSharper disable InconsistentNaming
 
 namespace Extractor.Dto
 {
-    public class DataAccessOptions
+    public sealed class DataAccessOptions
     {
         public bool LegacyRedirects { get; set; }
         public bool ReturnErrorValuesAsNull { get; set; }
     }
 
-    public class AttributeHierarchy
+    public sealed class AttributeHierarchy
     {
         public string State { get; set; }
         public DateTime ModifiedTime { get; set; }
         public DateTime RefreshedTime { get; set; }
     }
 
-    public class Annotation
+    public sealed class Annotation
     {
         public string Name { get; set; }
         public string Value { get; set; }
         public DateTime ModifiedTime { get; set; }
     }
 
-    public class DefaultHierarchy
+    public sealed class DefaultHierarchy
     {
         public string Table { get; set; }
         public string Hierarchy { get; set; }
     }
 
-    public class Variation
+    public sealed class Variation
     {
         public string Name { get; set; }
         public string Relationship { get; set; }
@@ -38,7 +42,7 @@ namespace Extractor.Dto
         public bool IsDefault { get; set; }
     }
 
-    public class Column
+    public sealed class Column
     {
         public string Type { get; set; }
         public string Name { get; set; }
@@ -64,13 +68,13 @@ namespace Extractor.Dto
         public string DisplayFolder { get; set; }
     }
 
-    public class Source
+    public sealed class Source
     {
         public string Type { get; set; }
         public string Expression { get; set; }
     }
 
-    public class Partition
+    public sealed class Partition
     {
         public string Name { get; set; }
         public string Mode { get; set; }
@@ -80,7 +84,7 @@ namespace Extractor.Dto
         public Source Source { get; set; }
     }
 
-    public class Level
+    public sealed class Level
     {
         public string Name { get; set; }
         public int Ordinal { get; set; }
@@ -88,7 +92,7 @@ namespace Extractor.Dto
         public DateTime ModifiedTime { get; set; }
     }
     
-    public class Hierarchy
+    public sealed class Hierarchy
     {
         public string Name { get; set; }
         public string State { get; set; }
@@ -99,7 +103,7 @@ namespace Extractor.Dto
         public IList<Annotation> Annotations { get; set; }
     }
 
-    public class Measure
+    public sealed class Measure
     {
         public string Name { get; set; }
         public string Expression { get; set; }
@@ -111,7 +115,7 @@ namespace Extractor.Dto
         public string DisplayFolder { get; set; }
     }
 
-    public class Table
+    public sealed class Table
     {
         public string Name { get; set; }
         public DateTime ModifiedTime { get; set; }
@@ -126,7 +130,7 @@ namespace Extractor.Dto
         public IList<Measure> Measures { get; set; }
     }
 
-    public class Relationship
+    public sealed class Relationship
     {
         public string Name { get; set; }
         public string FromTable { get; set; }
@@ -139,14 +143,14 @@ namespace Extractor.Dto
         public DateTime RefreshedTime { get; set; }
     }
 
-    public class Content
+    public sealed class Content
     {
         public string Version { get; set; }
         public string Language { get; set; }
         public string DynamicImprovement { get; set; }
     }
 
-    public class LinguisticMetadata
+    public sealed class LinguisticMetadata
     {
         // In some reports Content contains XML and sometimes JSON.
         // Disabled to skip parsing.
@@ -155,7 +159,7 @@ namespace Extractor.Dto
         // public DateTime ModifiedTime { get; set; }
     }
 
-    public class Culture
+    public sealed class Culture
     {
         public string Name { get; set; }
         public DateTime ModifiedTime { get; set; }
@@ -163,7 +167,7 @@ namespace Extractor.Dto
         public LinguisticMetadata LinguisticMetadata { get; set; }
     }
 
-    public class Model
+    public sealed class Model
     {
         public string Culture { get; set; }
         public DataAccessOptions DataAccessOptions { get; set; }
@@ -179,13 +183,13 @@ namespace Extractor.Dto
         public IList<Annotation> Annotations { get; set; }
     }
 
-    public class QueryGroup
+    public sealed class QueryGroup
     {
         public string Folder { get; set; }
         public IList<Annotation> Annotations { get; set; }
     }
     
-    public class Expression
+    public sealed class Expression
     {
         public string Name { get; set; }
         public string Kind { get; set; }
@@ -197,7 +201,7 @@ namespace Extractor.Dto
         public string QueryGroup { get; set; }
     }
     
-    public class DataModelSchema
+    public sealed class DataModelSchema
     {
         public string Name { get; set; }
         public int CompatibilityLevel { get; set; }
