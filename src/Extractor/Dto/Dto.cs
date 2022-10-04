@@ -72,7 +72,6 @@ namespace Extractor.Dto
     public sealed class Source
     {
         public string Type { get; set; }
-        
         [JsonConverter(typeof(ConcatenatingLineConverter))]
         public string Expression { get; set; }
     }
