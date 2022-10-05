@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -29,13 +28,8 @@ public class ConcatenatingLineConverter : JsonConverter
         throw new InvalidOperationException($"The {nameof(ConcatenatingLineConverter)} expects string or array of strings in this context.");
     }
     
-    public override bool CanRead
-    {
-        get { return true; }
-    }
-    
     public override bool CanConvert(Type typeToConvert)
     {
-        return typeToConvert == typeof(string) || typeToConvert == typeof(List<string>);
+        return false;
     }
 }
