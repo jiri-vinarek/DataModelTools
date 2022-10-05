@@ -1,0 +1,21 @@
+  {
+  "model": {
+    "tables": [
+      {
+        "name": "table1",
+        "partitions": [
+          {
+            "name": "table1-id",
+            "source": {
+              "type": "calculated",
+              "expression": [
+                "line1",
+                "line2"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

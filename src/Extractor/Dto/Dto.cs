@@ -62,6 +62,7 @@ namespace Extractor.Dto
         public bool? IsNameInferred { get; set; }
         public bool? IsDataTypeInferred { get; set; }
         public string DataCategory { get; set; }
+        [JsonConverter(typeof(ConcatenatingLineConverter))]
         public string Expression { get; set; }
         public string SortByColumn { get; set; }
         public IList<Variation> Variations { get; set; }
@@ -71,6 +72,7 @@ namespace Extractor.Dto
     public sealed class Source
     {
         public string Type { get; set; }
+        [JsonConverter(typeof(ConcatenatingLineConverter))]
         public string Expression { get; set; }
     }
 
@@ -106,6 +108,7 @@ namespace Extractor.Dto
     public sealed class Measure
     {
         public string Name { get; set; }
+        [JsonConverter(typeof(ConcatenatingLineConverter))]
         public string Expression { get; set; }
         public string FormatString { get; set; }
         public string DataType { get; set; }
@@ -193,6 +196,7 @@ namespace Extractor.Dto
     {
         public string Name { get; set; }
         public string Kind { get; set; }
+        [JsonConverter(typeof(ConcatenatingLineConverter))]
         [JsonProperty("Expression")]
         public string ExpressionContent { get; set; }
         public string LineageTag { get; set; }

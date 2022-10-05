@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -74,6 +75,24 @@ public sealed class Tests
                     fileName: "table1-id.calculated"
                 ),
                 content: "Row(\"Column\", BLANK())"
+            )
+        };
+
+        extracts.Should().BeEquivalentTo(expectedExtracts);
+    }
+    
+    [Test]
+    public void TestPartitionWithMultilineExpression()
+    {
+        var extracts = GetExtracts("PartitionWithMultilineSourceExpression.json");
+        var expectedExtracts = new List<Extract>
+        {
+            new Extract(
+                file: new File(
+                    relativePath: "tables/table1/partitions",
+                    fileName: "table1-id.calculated"
+                ),
+                content: "line1" + Environment.NewLine + "line2"
             )
         };
 
