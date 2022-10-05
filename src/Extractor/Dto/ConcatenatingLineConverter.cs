@@ -26,7 +26,7 @@ public class ConcatenatingLineConverter : JsonConverter
             return string.Join("\n", values);
         }
 
-        throw new NotImplementedException($"The {nameof(ConcatenatingLineConverter)} expects string or array of strings in this context.");
+        throw new InvalidOperationException($"The {nameof(ConcatenatingLineConverter)} expects string or array of strings in this context.");
     }
     
     public override bool CanRead
