@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Text;
 using Newtonsoft.Json;
 using Extractor.Dto;
+using System.Text.RegularExpressions;
 
 namespace Extractor
 {
@@ -31,15 +32,15 @@ namespace Extractor
 
             if (layout != null)
             {
-                var extract = Extractor.GetLayoutExtract(layout);
-                Write(new[] { extract }, outputDir);
+                var extracts = Extractor.GetLayoutExtracts(layout);
+                Write(extracts, outputDir);
             }
         }
 
-        public static (DataModelSchema dataModelSchema, object layout) Read(string path)
+        public static (DataModelSchema dataModelSchema, Layout layout) Read(string path)
         {
             DataModelSchema dataModelSchema = null;
-            object layout = null;
+            Layout layout = null;
 
             using var archive = ZipFile.OpenRead(path);
 
@@ -68,9 +69,10 @@ namespace Extractor
             return (DataModelSchema)serializer.Deserialize(reader, typeof(DataModelSchema));
         }
 
-        public static object GetLayout(StreamReader reader)
+        public static Layout GetLayout(StreamReader reader)
         {
-            return JsonConvert.DeserializeObject(reader.ReadToEnd());
+            var serializer = new JsonSerializer();
+            return (Layout)serializer.Deserialize(reader, typeof(Layout));
         }
 
         public static void Write(IEnumerable<Extract> extracts, string outputDir)

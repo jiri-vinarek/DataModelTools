@@ -182,6 +182,7 @@ namespace Extractor.Dto
         public IList<QueryGroup> QueryGroups { get; set; }
         public IList<Table> Tables { get; set; }
         public IList<Relationship> Relationships { get; set; }
+        public IList<Role> Roles { get; set; }
         public IList<Culture> Cultures { get; set; }
         public IList<Annotation> Annotations { get; set; }
     }
@@ -214,5 +215,20 @@ namespace Extractor.Dto
         public DateTime LastSchemaUpdate { get; set; }
         public DateTime LastProcessed { get; set; }
         public Model Model { get; set; }
+    }
+
+    public class Role
+    {
+        public IList<Annotation> Annotations { get; set; }
+        public string ModelPermission { get; set; }
+        public string Name { get; set; }
+        public IList<TablePermission> TablePermissions { get; set; }
+    }
+
+    public class TablePermission
+    {
+        [JsonConverter(typeof(ConcatenatingLineConverter))]
+        public string FilterExpression { get; set; }
+        public string Name { get; set; }
     }
 }

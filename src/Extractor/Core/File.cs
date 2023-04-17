@@ -1,4 +1,7 @@
 ﻿using Extractor.Dto;
+using System.Collections.Concurrent;
+using System.ComponentModel;
+using System.Data;
 
 namespace Extractor
 {
@@ -51,6 +54,31 @@ namespace Extractor
             var fileName = Sanitize($"{expression.Name}.{expression.Kind}");
 
             return new File("expressions", fileName);
+        }
+
+        public static File FromRelationship(Relationship relationship)
+        {
+            var fileName = Sanitize($"{relationship.Name}");
+
+            return new File("relationships", fileName);
+        }
+
+        public static File FromRole(Role role)
+        {
+            var fileName = Sanitize($"{role.Name}");
+
+            return new File("roles", fileName);
+        }
+
+        public static File FromPage(Section section, string fileName)
+        {   
+            return new File($"report/{section.DisplayName}", fileName);
+        }
+
+        public static File FromVisualContainer(Section section, Visualcontainer container, string fileName)
+        {
+            var config = container.Config.ConvertToConfig();
+            return new File($"report/{section.DisplayName}/{config.Name}", fileName);
         }
 
         private static string Sanitize(string fileName, string replacement = "_")
