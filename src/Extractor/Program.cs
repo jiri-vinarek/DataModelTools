@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Extractor.Dto;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
-using Newtonsoft.Json;
-using Extractor.Dto;
-using System.Text.RegularExpressions;
 
 namespace Extractor
 {

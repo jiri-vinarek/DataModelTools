@@ -1,0 +1,15 @@
+{
+  "model": {
+    "tables": [
+    ],
+    "relationships": [
+      {
+        "fromColumn": "EnterpriseKey",
+        "fromTable": "bill",
+        "name": "9a41faf5-26a4-48f8-8d2b-942a4f2aac0d",
+        "toColumn": "EnterpriseKey",
+        "toTable": "enterprise"
+      }
+    ]
+  }
+}

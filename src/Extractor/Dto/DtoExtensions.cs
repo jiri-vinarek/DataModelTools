@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Extractor.Dto;
+﻿using Extractor.Dto;
+using Extractor.Helpers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Extractor
 {
@@ -34,13 +36,8 @@ namespace Extractor
 
         public static IEnumerable<Filter> ConvertToFilters(this string filters)
         {
-            return string.IsNullOrEmpty(filters) ? 
+            return string.IsNullOrEmpty(filters) ?
                 Enumerable.Empty<Filter>() : JsonConvert.DeserializeObject<IEnumerable<Filter>>(filters).Where(f => f.Expression != null);
-        }
-
-        public static Config ConvertToConfig(this string config)
-        {
-            return JsonConvert.DeserializeObject<Config>(config);
         }
 
         public static Query ConvertToQuery(this string query)
@@ -51,6 +48,20 @@ namespace Extractor
         public static DataTransforms ConvertToDataTransforms(this string dataTransforms)
         {
             return JsonConvert.DeserializeObject<DataTransforms>(dataTransforms);
+        }
+
+        public static string GetVisualContainerTitle(this Visualcontainer visualcontainer)
+        {
+            JObject config = JObject.Parse(visualcontainer.Config);
+
+            var title = config["singleVisual"]?["vcObjects"]?["title"]?[0]?["properties"]?["text"]?["expr"]?["Literal"]?["Value"].ToString();
+
+            if (title != null)
+            {
+                return title.ToCamelCase();
+            }
+
+            return null;
         }
     }
 }

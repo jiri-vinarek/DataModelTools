@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 // ReSharper disable CollectionNeverUpdated.Global
@@ -93,7 +93,7 @@ namespace Extractor.Dto
         public string Column { get; set; }
         public DateTime ModifiedTime { get; set; }
     }
-    
+
     public sealed class Hierarchy
     {
         public string Name { get; set; }
@@ -133,19 +133,6 @@ namespace Extractor.Dto
         public IList<Measure> Measures { get; set; }
     }
 
-    public sealed class Relationship
-    {
-        public string Name { get; set; }
-        public string FromTable { get; set; }
-        public string FromColumn { get; set; }
-        public string ToTable { get; set; }
-        public string ToColumn { get; set; }
-        public string JoinOnDateBehavior { get; set; }
-        public string State { get; set; }
-        public DateTime ModifiedTime { get; set; }
-        public DateTime RefreshedTime { get; set; }
-    }
-
     public sealed class Content
     {
         public string Version { get; set; }
@@ -181,7 +168,7 @@ namespace Extractor.Dto
         public IList<Expression> Expressions { get; set; }
         public IList<QueryGroup> QueryGroups { get; set; }
         public IList<Table> Tables { get; set; }
-        public IList<Relationship> Relationships { get; set; }
+        public IList<dynamic> Relationships { get; set; }
         public IList<Role> Roles { get; set; }
         public IList<Culture> Cultures { get; set; }
         public IList<Annotation> Annotations { get; set; }
@@ -192,7 +179,7 @@ namespace Extractor.Dto
         public string Folder { get; set; }
         public IList<Annotation> Annotations { get; set; }
     }
-    
+
     public sealed class Expression
     {
         public string Name { get; set; }
@@ -205,7 +192,7 @@ namespace Extractor.Dto
         public IList<Annotation> Annotations { get; set; }
         public string QueryGroup { get; set; }
     }
-    
+
     public sealed class DataModelSchema
     {
         public string Name { get; set; }

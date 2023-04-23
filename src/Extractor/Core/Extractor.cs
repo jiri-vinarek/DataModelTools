@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using Extractor.Dto;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Extractor.Dto;
-using Newtonsoft.Json;
 
 namespace Extractor
 {
@@ -18,7 +17,7 @@ namespace Extractor
             var columns = tables.Where(t => t.Columns != null).SelectMany(t => GetColumns(t));
             var partitions = tables.Where(t => t.Partitions != null).SelectMany(t => GetPartitions(t));
             var roles = schema.Model.Roles != null ? schema.Model.Roles.Select(r => GetExtractFromRoles(r)) : Enumerable.Empty<Extract>();
-            var relationships = schema.Model.Relationships != null ? schema.Model.Relationships.Select(r => GetExtractFromRelationships(r)) : Enumerable.Empty<Extract>();
+            var relationships = schema.Model.Relationships != null ? schema.Model.Relationships.Select(r => GetExtractFromRelationships(r)).Cast<Extract>() : Enumerable.Empty<Extract>();
             var expressions = schema.Model.Expressions != null ? schema.Model.Expressions.Select(e => GetExtractFromExpression(e)) : Enumerable.Empty<Extract>();
 
             return measures.Concat(columns).Concat(partitions).Concat(expressions).Concat(relationships).Concat(roles);
@@ -26,18 +25,17 @@ namespace Extractor
 
         public static IEnumerable<Extract> GetLayoutExtracts(Layout layout)
         {
-            var layoutRaw = GetLayoutExtract(layout);
-            var allPagesFilter = layout.Filters != null ? GetAllPagesFilter(layout) : null;
+            var allPagesFilter = layout.Filters != null ? new List<Extract> { GetAllPagesFilter(layout) } : Enumerable.Empty<Extract>();
 
             var pageFilters = layout.Sections.Where(s => s.Filters != null && s.Filters != "[]").Select(s => GetPageFilter(s));
-            var pageConfigs = layout.Sections.Select(s => GetPageConfig(s));
+            var pageConfigs = layout.Sections.Where(s => s.Config != "{}").Select(s => GetPageConfig(s));
 
             var visualFilters = layout.Sections.SelectMany(s => s.VisualContainers.Where(x => x.Filters != "[]").Select(v => GetVisualFilter(s, v)));
             var visualConfigs = layout.Sections.SelectMany(s => s.VisualContainers.Select(v => GetVisualConfigs(s, v)));
             var visualQuery = layout.Sections.SelectMany(s => s.VisualContainers.Where(x => x.Query != null).Select(v => GetVisualQuery(s, v)));
             var visualDataTransforms = layout.Sections.SelectMany(s => s.VisualContainers.Where(x => x.DataTransforms != null).Select(v => GetVisualDataTransforms(s, v)));
 
-            return new List<Extract> { layoutRaw, allPagesFilter }
+            return allPagesFilter
                 .Concat(pageConfigs)
                 .Concat(pageFilters)
                 .Concat(visualFilters)
@@ -66,7 +64,7 @@ namespace Extractor
         {
             return new Extract(
                 File.FromPage(section, "Config"),
-                JsonConvert.SerializeObject(section.Filters.ConvertToFilters(), Formatting.Indented)
+                JsonConvert.SerializeObject(JsonConvert.DeserializeObject<dynamic>(section.Config), Formatting.Indented)
             );
         }
 
@@ -82,7 +80,7 @@ namespace Extractor
         {
             return new Extract(
                 File.FromVisualContainer(section, container, "Config"),
-                JsonConvert.SerializeObject(container.Config.ConvertToConfig(), Formatting.Indented)
+                JsonConvert.SerializeObject(JsonConvert.DeserializeObject<dynamic>(container.Config), Formatting.Indented)
             );
         }
 
@@ -142,7 +140,7 @@ namespace Extractor
             );
         }
 
-        private static Extract GetExtractFromRelationships(Relationship relationship)
+        private static Extract GetExtractFromRelationships(dynamic relationship)
         {
             return new Extract(
                 File.FromRelationship(relationship),

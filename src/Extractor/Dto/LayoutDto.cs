@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Extractor.Dto
 {
@@ -51,7 +45,7 @@ namespace Extractor.Dto
 
     public class Section
     {
-        public string Config { get; set; }
+        public dynamic Config { get; set; }
         public string DisplayName { get; set; }
         public int DisplayOption { get; set; }
         public string Filters { get; set; }
@@ -64,7 +58,7 @@ namespace Extractor.Dto
 
     public class Visualcontainer
     {
-        public string Config { get; set; }
+        public dynamic Config { get; set; }
         public string Filters { get; set; }
         public float Height { get; set; }
         public long Id { get; set; }
@@ -84,18 +78,8 @@ namespace Extractor.Dto
         public object Expression { get; set; }
         public int HowCreated { get; set; }
         public string Name { get; set; }
-        public int Ordinal { get; set; }
         public string Type { get; set; }
     }
-
-
-    public class Config
-    {
-        public string Name { get; set; }
-        public object Layouts { get; set; }
-        public object SingleVisual { get; set; }
-    }
-
 
     public class DataTransforms
     {

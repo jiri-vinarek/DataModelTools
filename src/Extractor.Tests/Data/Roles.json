@@ -1,0 +1,60 @@
+{
+  "model": {
+    "tables": [
+    ],
+    "roles": [
+      {
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "f475940b751a4eb88065338ee13cc6f7"
+          }
+        ],
+        "modelPermission": "read",
+        "name": "User",
+        "tablePermissions": [
+          {
+            "filterExpression": [
+              "'enterprise'[EnterpriseKey] IN CALCULATETABLE(",
+              "VALUES(user_enterprise_access[EnterpriseKey]),",
+              "FILTER(user_enterprise_access,",
+              "LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))",
+              ")"
+            ],
+            "name": "enterprise"
+          },
+          {
+            "filterExpression": [
+              "'bill'[EnterpriseKey] IN CALCULATETABLE(",
+              "VALUES(user_enterprise_access[EnterpriseKey]),",
+              "FILTER(user_enterprise_access,",
+              "LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))",
+              ")"
+            ],
+            "name": "bill"
+          },
+          {
+            "filterExpression": [
+              "'account_company'[ChainKey] IN CALCULATETABLE(",
+              "VALUES(user_enterprise_access[ChainKey]),",
+              "FILTER(user_enterprise_access,",
+              "LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))",
+              ")"
+            ],
+            "name": "account_company"
+          },
+          {
+            "filterExpression": [
+              "'account'[ChainKey] IN CALCULATETABLE(",
+              "VALUES(user_enterprise_access[ChainKey]),",
+              "FILTER(user_enterprise_access,",
+              "LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))",
+              ")"
+            ],
+            "name": "account"
+          }
+        ]
+      }
+    ]
+  }
+}
