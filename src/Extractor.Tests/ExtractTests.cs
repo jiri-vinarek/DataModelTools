@@ -120,27 +120,27 @@ public sealed class Tests
         extracts.Should().BeEquivalentTo(expectedExtracts);
     }
 
-    private IEnumerable<Extract> GetExtracts(string fileName)
+    private static IEnumerable<Extract> GetExtracts(string fileName)
     {
         using var reader = new StreamReader(GetDataPath(fileName));
         var schema = Program.GetSchema(reader);
         return Extractor.GetSchemaExtracts(schema);
     }
 
-    private IEnumerable<Extract> GetLayoutExtracts(string fileName)
+    private static IEnumerable<Extract> GetLayoutExtracts(string fileName)
     {
         using var reader = new StreamReader(GetDataPath(fileName));
         var layout = Program.GetLayout(reader);
         return Extractor.GetLayoutExtracts(layout);
     }
 
-    private string GetDataPath(string fileName)
+    private static string GetDataPath(string fileName)
     {
         return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Data", fileName);
     }
 
     [Test]
-    public void ExtractRelationShiptTest()
+    public void ExtractRelationshipsTest()
     {
         var extracts = GetExtracts("Relationships.json");
         var relationship = new
@@ -205,7 +205,7 @@ LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))
         extracts.Should().BeEquivalentTo(expectedExtracts);
     }
 
-    private List<dynamic> GetFilterMock()
+    private static List<dynamic> GetFilterMock()
     {
         return new List<dynamic>()
         {
@@ -247,7 +247,7 @@ LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))
     [Test]
     public void ExtractPageFiltersTest()
     {
-        var extract = GetLayoutExtracts("PageFilter.json").FirstOrDefault(x => x?.File?.FileName == "Filters");
+        var extract = GetLayoutExtracts("PageFilter.json").FirstOrDefault(x => x.File?.FileName == "Filters");
 
         var expectedExtract =
             new Extract(

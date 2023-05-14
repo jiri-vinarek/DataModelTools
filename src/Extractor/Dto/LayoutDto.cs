@@ -52,11 +52,11 @@ namespace Extractor.Dto
         public int Height { get; set; }
         public string Name { get; set; }
         public int Ordinal { get; set; }
-        public IList<Visualcontainer> VisualContainers { get; set; }
+        public IList<VisualContainer> VisualContainers { get; set; }
         public int Width { get; set; }
     }
 
-    public class Visualcontainer
+    public class VisualContainer
     {
         public dynamic Config { get; set; }
         public string Filters { get; set; }

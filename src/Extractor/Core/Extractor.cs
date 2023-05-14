@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace Extractor
@@ -47,7 +46,7 @@ namespace Extractor
         public static Extract GetAllPagesFilter(Layout layout)
         {
             return new Extract(
-            new File("report", "AllPagesFilter.json"),
+                new File("report", "AllPagesFilter.json"),
                 JsonConvert.SerializeObject(layout.Filters.ConvertToFilters(), Formatting.Indented)
             );
         }
@@ -68,7 +67,7 @@ namespace Extractor
             );
         }
 
-        public static Extract GetVisualFilter(Section section, Visualcontainer container)
+        public static Extract GetVisualFilter(Section section, VisualContainer container)
         {
             return new Extract(
                 File.FromVisualContainer(section, container, "Filters"),
@@ -76,7 +75,7 @@ namespace Extractor
             );
         }
 
-        public static Extract GetVisualConfigs(Section section, Visualcontainer container)
+        public static Extract GetVisualConfigs(Section section, VisualContainer container)
         {
             return new Extract(
                 File.FromVisualContainer(section, container, "Config"),
@@ -84,7 +83,7 @@ namespace Extractor
             );
         }
 
-        public static Extract GetVisualQuery(Section section, Visualcontainer container)
+        public static Extract GetVisualQuery(Section section, VisualContainer container)
         {
             return new Extract(
                 File.FromVisualContainer(section, container, "Query"),
@@ -92,19 +91,11 @@ namespace Extractor
             );
         }
 
-        public static Extract GetVisualDataTransforms(Section section, Visualcontainer container)
+        public static Extract GetVisualDataTransforms(Section section, VisualContainer container)
         {
             return new Extract(
                 File.FromVisualContainer(section, container, "DataTransforms"),
                 JsonConvert.SerializeObject(container.DataTransforms.ConvertToDataTransforms(), Formatting.Indented)
-            );
-        }
-
-        public static Extract GetLayoutExtract(Layout layout)
-        {
-            return new Extract(
-                new File("report", "layout.json"),
-                JsonConvert.SerializeObject(layout, Formatting.Indented)
             );
         }
 

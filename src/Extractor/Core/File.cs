@@ -73,7 +73,7 @@ namespace Extractor
             return new File($"report/{section.DisplayName}", fileName);
         }
 
-        public static File FromVisualContainer(Section section, Visualcontainer container, string fileName)
+        public static File FromVisualContainer(Section section, VisualContainer container, string fileName)
         {
             var configName = JObject.Parse(container.Config)["name"].ToString();
             var visualTitle = container.GetVisualContainerTitle();

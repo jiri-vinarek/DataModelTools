@@ -11,7 +11,7 @@ namespace Extractor.Helpers
             str = str.Replace("'", "");
 
             var wordsArray = str.Split(new[] { "_", " " }, StringSplitOptions.RemoveEmptyEntries);
-            var words = wordsArray.Select(word => char.ToUpper(word[0]) + word.Substring(1))
+            var words = wordsArray.Select(word => char.ToUpper(word[0]) + word[1..])
                 .ToArray();
 
             return string.Join(string.Empty, words);

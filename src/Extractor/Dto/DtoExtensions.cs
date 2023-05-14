@@ -50,7 +50,7 @@ namespace Extractor
             return JsonConvert.DeserializeObject<DataTransforms>(dataTransforms);
         }
 
-        public static string GetVisualContainerTitle(this Visualcontainer visualcontainer)
+        public static string GetVisualContainerTitle(this VisualContainer visualcontainer)
         {
             JObject config = JObject.Parse(visualcontainer.Config);
 
