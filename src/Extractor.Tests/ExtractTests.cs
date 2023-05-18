@@ -262,7 +262,7 @@ LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))
     [Test]
     public void ExtractVisualContainerFiltersTest()
     {
-        var extract = GetLayoutExtracts("VisualContainerFilter.json").FirstOrDefault(x => x?.File?.FileName == "Filters");
+        var extract = GetLayoutExtracts("VisualContainerFilter.json").FirstOrDefault(x => x.File?.FileName == "Filters");
 
         var expectedExtract =
             new Extract(
@@ -276,7 +276,7 @@ LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))
     [Test]
     public void ExtractPageConfigTest()
     {
-        var extract = GetLayoutExtracts("PageConfig.json").FirstOrDefault(x => x?.File?.FileName == "Config");
+        var extract = GetLayoutExtracts("PageConfig.json").FirstOrDefault(x => x.File?.FileName == "Config");
 
         dynamic expectedConfigObject = "{\"relationships\":[{\"source\":\"b93c2b8a314195409ea9\",\"target\":\"ad40d3af784e006b4b3c\",\"type\":1}],\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"190L\"}}}}}]},\"filterSortOrder\":3}";
 
@@ -292,7 +292,7 @@ LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))
     [Test]
     public void ExtractVisualContainerConfigTest()
     {
-        var extract = GetLayoutExtracts("VisualContainerConfig.json").FirstOrDefault(x => x?.File?.RelativePath == "report/AgingReport/53caaf51ea569a44b22e" && x?.File?.FileName == "Config");
+        var extract = GetLayoutExtracts("VisualContainerConfig.json").FirstOrDefault(x => x.File?.RelativePath == "report/AgingReport/53caaf51ea569a44b22e" && x.File?.FileName == "Config");
 
         dynamic expectedConfigObject = "{\"name\":\"53caaf51ea569a44b22e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":12,\"z\":0,\"width\":1408,\"height\":674,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"basicShape\",\"drillFilterOtherVisuals\":true,\"objects\":{\"fill\":[{\"properties\":{\"fillColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}},\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}}";
 
@@ -308,7 +308,7 @@ LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))
     [Test]
     public void ExtractVisualQueryTest()
     {
-        var extract = GetLayoutExtracts("VisualContainerQuery.json").FirstOrDefault(x => x?.File?.FileName == "Query");
+        var extract = GetLayoutExtracts("VisualContainerQuery.json").FirstOrDefault(x => x.File?.FileName == "Query");
 
         dynamic expectedConfigObject = "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"_\",\"Entity\":\"_core custom measures\",\"Type\":0},{\"Name\":\"b\",\"Entity\":\"bill_dimensions_table\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"_\"}},\"Property\":\"LastRefresh\"},\"Name\":\"_core custom measures.LastRefresh\"}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"b\"}},\"Property\":\"aging_table Fields\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'''account''[AccountType]'\"}}],[{\"Literal\":{\"Value\":\"'''account''[OrganisationName]'\"}}],[{\"Literal\":{\"Value\":\"'''account''[CustomerName]'\"}}]]}}}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"DataReduction\":{\"DataVolume\":3,\"Primary\":{\"Top\":{}}},\"Version\":1},\"ExecutionMetricsKind\":1}}]}";
 
@@ -324,7 +324,7 @@ LOWER(user_enterprise_access[UserId]) = LOWER(USERPRINCIPALNAME()))
     [Test]
     public void ExtractVisualDataTransformTest()
     {
-        var extract = GetLayoutExtracts("VisualContainerDataTransform.json").FirstOrDefault(x => x?.File?.FileName == "DataTransforms");
+        var extract = GetLayoutExtracts("VisualContainerDataTransform.json").FirstOrDefault(x => x.File?.FileName == "DataTransforms");
 
         dynamic expectedConfigObject = "{\"objects\":{\"labels\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#101B2C'\"}}}}},\"fontSize\":{\"expr\":{\"Literal\":{\"Value\":\"'23'\"}}},\"fontFamily\":{\"expr\":{\"Literal\":{\"Value\":\"'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'\"}}}}}],\"categoryLabels\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#6b7989'\"}}}}},\"fontSize\":{\"expr\":{\"Literal\":{\"Value\":\"'11'\"}}}}}]},\"projectionOrdering\":{\"Values\":[0]},\"queryMetadata\":{\"Select\":[{\"Restatement\":\"Total amount\",\"Name\":\"_core custom measures.AmountReceivableTotal\",\"Type\":1,\"Format\":\"0.00\"}]},\"visualElements\":[{\"DataRoles\":[{\"Name\":\"Values\",\"Projection\":0,\"isActive\":false}]}],\"selects\":[{\"displayName\":\"Total amount\",\"format\":\"0.00\",\"queryName\":\"_core custom measures.AmountReceivableTotal\",\"roles\":{\"Values\":true},\"type\":{\"category\":null,\"underlyingType\":259},\"expr\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"_core custom measures\"}},\"Property\":\"AmountReceivableTotal\"}}}]}";
 
