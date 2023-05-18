@@ -6,3 +6,4 @@
 
 src/packages
 src/build
+src/Extractor/Properties/launchSettings.json

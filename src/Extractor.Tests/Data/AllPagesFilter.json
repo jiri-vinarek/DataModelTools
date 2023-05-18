@@ -1,0 +1,4 @@
+{
+  "filters": "[{\"name\":\"Filter99db7c6e4bdb6ad6b7cf\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"calender\"}},\"Property\":\"Date\"}},\"type\":\"Categorical\",\"howCreated\":1,\"displayName\":\"Relative date (empty is today)\",\"ordinal\":0}]",
+  "sections": []
+}

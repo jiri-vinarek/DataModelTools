@@ -1,0 +1,13 @@
+{ 
+  "sections": [
+    {
+      "config": "{\"relationships\":[{\"source\":\"b93c2b8a314195409ea9\",\"target\":\"ad40d3af784e006b4b3c\",\"type\":1}],\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"190L\"}}}}}]},\"filterSortOrder\":3}",
+      "displayName": "AgingReport",
+      "displayOption": 1,      
+      "height": 720,
+      "name": "ReportSection5241e05008105b7399ce",
+      "ordinal": 0,
+      "visualContainers": []
+    }
+  ]
+}

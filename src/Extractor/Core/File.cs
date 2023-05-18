@@ -1,4 +1,5 @@
 ﻿using Extractor.Dto;
+using Newtonsoft.Json.Linq;
 
 namespace Extractor
 {
@@ -51,6 +52,35 @@ namespace Extractor
             var fileName = Sanitize($"{expression.Name}.{expression.Kind}");
 
             return new File("expressions", fileName);
+        }
+
+        public static File FromRelationship(dynamic relationship)
+        {
+            var name = Sanitize(relationship.name.ToString());
+
+            return new File("relationships", name);
+        }
+
+        public static File FromRole(Role role)
+        {
+            var fileName = Sanitize(role.Name);
+
+            return new File("roles", fileName);
+        }
+
+        public static File FromPage(Section section, string fileName)
+        {
+            return new File($"report/{section.DisplayName}", fileName);
+        }
+
+        public static File FromVisualContainer(Section section, VisualContainer container, string fileName)
+        {
+            var configName = JObject.Parse(container.Config)["name"].ToString();
+            var visualTitle = container.GetVisualContainerTitle();
+
+            var visualContainerFolderName = Sanitize(string.IsNullOrEmpty(visualTitle) ? configName : $"{visualTitle}_{configName}");
+
+            return new File($"report/{section.DisplayName}/{visualContainerFolderName}", fileName);
         }
 
         private static string Sanitize(string fileName, string replacement = "_")

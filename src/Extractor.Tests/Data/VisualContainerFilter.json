@@ -1,0 +1,24 @@
+{ 
+  "sections": [
+    {
+      "config": "{\"relationships\":[{\"source\":\"b93c2b8a314195409ea9\",\"target\":\"ad40d3af784e006b4b3c\",\"type\":1},{\"source\":\"735819a08d2a0cb500a0\",\"target\":\"ad40d3af784e006b4b3c\",\"type\":1}],\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"190L\"}}}}}]},\"filterSortOrder\":3}",
+      "displayName": "AgingReport",
+      "displayOption": 1,      
+      "height": 720,
+      "name": "ReportSection5241e05008105b7399ce",
+      "ordinal": 0,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"53caaf51ea569a44b22e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":16,\"y\":12,\"z\":0,\"width\":1408,\"height\":674,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"basicShape\",\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"shapeType\":{\"expr\":{\"Literal\":{\"Value\":\"'rectangle'\"}}}}}],\"line\":[{\"properties\":{\"lineColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}},\"weight\":{\"expr\":{\"Literal\":{\"Value\":\"3D\"}}}}}],\"fill\":[{\"properties\":{\"fillColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}},\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]},\"vcObjects\":{\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}],\"background\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}],\"dropShadow\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"preset\":{\"expr\":{\"Literal\":{\"Value\":\"'Custom'\"}}},\"shadowSpread\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}},\"shadowBlur\":{\"expr\":{\"Literal\":{\"Value\":\"12D\"}}},\"angle\":{\"expr\":{\"Literal\":{\"Value\":\"90D\"}}},\"shadowDistance\":{\"expr\":{\"Literal\":{\"Value\":\"2D\"}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"90D\"}}}}}],\"visualLink\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"type\":{\"expr\":{\"Literal\":{\"Value\":\"'PageNavigation'\"}}},\"tooltip\":{\"expr\":{\"Literal\":{\"Value\":\"'Dashboard'\"}}}}}],\"title\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Report'\"}}},\"alignment\":{\"expr\":{\"Literal\":{\"Value\":\"'center'\"}}},\"fontFamily\":{\"expr\":{\"Literal\":{\"Value\":\"'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'\"}}},\"fontColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0}}}}},\"fontSize\":{\"expr\":{\"Literal\":{\"Value\":\"10D\"}}}}}]}}}",
+          "filters": "[{\"name\":\"Filter99db7c6e4bdb6ad6b7cf\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"calender\"}},\"Property\":\"Date\"}},\"type\":\"Categorical\",\"howCreated\":1,\"displayName\":\"Relative date (empty is today)\",\"ordinal\":0}]",
+          "height": 674,
+          "id": 1066553957,
+          "width": 1408,
+          "x": 16,
+          "y": 12,
+          "z": 0
+        }
+      ]
+    }
+  ]
+}
